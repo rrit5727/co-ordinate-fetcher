@@ -21,12 +21,23 @@ const fetchCoordinates = async (address) => {
   }
 };
 
+const formatProperty = (property) => {
+  const formattedProperty = {};
+  for (const [key, value] of Object.entries(property)) {
+    const formattedValue = typeof value === 'string' ? value : value;
+    // Remove quotes from keys
+    const formattedKey = key.replace(/"/g, '').replace(/ /g, '_').toLowerCase();
+    formattedProperty[formattedKey] = formattedValue;
+  }
+  return formattedProperty;
+};
+
 const main = async () => {
   const updatedProperties = [];
   let counter = 0;
 
   for (const property of properties) {
-    const address = property['Street Address'];
+    const address = property['Street Address']; // Corrected key name
     try {
       const coords = await fetchCoordinates(address);
       const updatedProperty = {
@@ -48,7 +59,9 @@ const main = async () => {
     console.log(`Processed ${counter} properties`);
   }
 
-  console.log('Updated Properties:', JSON.stringify(updatedProperties, null, 2));
+  // Format output properties with keys without quotes and values without unnecessary quotes
+  const formattedProperties = updatedProperties.map(property => formatProperty(property));
+  console.log(formattedProperties);
 };
 
 main();
