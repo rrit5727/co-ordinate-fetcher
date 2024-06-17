@@ -1,104 +1,114 @@
-const properties = [
+const propertiesString = `[
   {
-    "Property ID": 170121,
-    "Address": "35 Boikonumba Rd  Wyee",
-    "Property post code": 2259,
-    "Area": 421.8,
-    "Sold date": "3/5/2024",
-    "Purchase price": 690000,
-    "Strata lot number": "",
-    "Street Address": "35 Boikonumba Rd  Wyee"
+    "property_id": 170121,
+    "address": "35 Boikonumba Rd  Wyee",
+    "property_post_code": 2259,
+    "area": 421.8,
+    "sold_date": "3/5/2024",
+    "purchase_price": 690000,
+    "strata_lot_number": "",
+    "street_address": "35 Boikonumba Rd  Wyee"
   },
   {
-    "Property ID": 171501,
-    "Address": "60 Webber Rd  Wyee",
-    "Property post code": 2259,
-    "Area": 13950,
-    "Sold date": "2/5/2024",
-    "Purchase price": 3300000,
-    "Strata lot number": "",
-    "Street Address": "60 Webber Rd  Wyee"
+    "property_id": 171501,
+    "address": "60 Webber Rd  Wyee",
+    "property_post_code": 2259,
+    "area": 13950,
+    "sold_date": "2/5/2024",
+    "purchase_price": 3300000,
+    "strata_lot_number": "",
+    "street_address": "60 Webber Rd  Wyee"
   },
   {
-    "Property ID": 2857545,
-    "Address": "57 Glenhope Rd  West Pennant Hills",
-    "Property post code": 2125,
-    "Area": 748.3,
-    "Sold date": "11/5/2024",
-    "Purchase price": 4000000,
-    "Strata lot number": "",
-    "Street Address": "57 Glenhope Rd  West Pennant Hills"
+    "property_id": 2857545,
+    "address": "57 Glenhope Rd  West Pennant Hills",
+    "property_post_code": 2125,
+    "area": 748.3,
+    "sold_date": "11/5/2024",
+    "purchase_price": 4000000,
+    "strata_lot_number": "",
+    "street_address": "57 Glenhope Rd  West Pennant Hills"
   },
   {
-    "Property ID": 2871969,
-    "Address": "92 Brampton Dr  Beaumont Hills",
-    "Property post code": 2155,
-    "Area": 647.6,
-    "Sold date": "29/4/2024",
-    "Purchase price": 1940000,
-    "Strata lot number": "",
-    "Street Address": "92 Brampton Dr  Beaumont Hills"
+    "property_id": 2871969,
+    "address": "92 Brampton Dr  Beaumont Hills",
+    "property_post_code": 2155,
+    "area": 647.6,
+    "sold_date": "29/4/2024",
+    "purchase_price": 1940000,
+    "strata_lot_number": "",
+    "street_address": "92 Brampton Dr  Beaumont Hills"
   },
   {
-    "Property ID": 2934268,
-    "Address": "45 Greyfriar Pl  Kellyville",
-    "Property post code": 2155,
-    "Area": 650,
-    "Sold date": "17/4/2024",
-    "Purchase price": 2470000,
-    "Strata lot number": "",
-    "Street Address": "45 Greyfriar Pl  Kellyville"
+    "property_id": 2934268,
+    "address": "45 Greyfriar Pl  Kellyville",
+    "property_post_code": 2155,
+    "area": 650,
+    "sold_date": "17/4/2024",
+    "purchase_price": 2470000,
+    "strata_lot_number": "",
+    "street_address": "45 Greyfriar Pl  Kellyville"
   },
   {
-    "Property ID": 2923611,
-    "Address": "48 Seymour Way  Kellyville",
-    "Property post code": 2155,
-    "Area": 450,
-    "Sold date": "19/4/2024",
-    "Purchase price": 1910000,
-    "Strata lot number": "",
-    "Street Address": "48 Seymour Way  Kellyville"
+    "property_id": 2923611,
+    "address": "48 Seymour Way  Kellyville",
+    "property_post_code": 2155,
+    "area": 450,
+    "sold_date": "19/4/2024",
+    "purchase_price": 1910000,
+    "strata_lot_number": "",
+    "street_address": "48 Seymour Way  Kellyville"
   },
   {
-    "Property ID": 2931620,
-    "Address": "2 Vernonia Ave  Kellyville",
-    "Property post code": 2155,
-    "Area": 599.3,
-    "Sold date": "19/3/2024",
-    "Purchase price": 2100000,
-    "Strata lot number": "",
-    "Street Address": "2 Vernonia Ave  Kellyville"
+    "property_id": 2931620,
+    "address": "2 Vernonia Ave  Kellyville",
+    "property_post_code": 2155,
+    "area": 599.3,
+    "sold_date": "19/3/2024",
+    "purchase_price": 2100000,
+    "strata_lot_number": "",
+    "street_address": "2 Vernonia Ave  Kellyville"
   },
   {
-    "Property ID": 2987388,
-    "Address": "71 Edgewater Dr  Bella Vista",
-    "Property post code": 2153,
-    "Area": 818,
-    "Sold date": "23/11/2023",
-    "Purchase price": 4107777,
-    "Strata lot number": "",
-    "Street Address": "71 Edgewater Dr  Bella Vista"
+    "property_id": 2987388,
+    "address": "71 Edgewater Dr  Bella Vista",
+    "property_post_code": 2153,
+    "area": 818,
+    "sold_date": "23/11/2023",
+    "purchase_price": 4107777,
+    "strata_lot_number": "",
+    "street_address": "71 Edgewater Dr  Bella Vista"
   },
   {
-    "Property ID": 3480868,
-    "Address": "21 Timberline Ave  West Pennant Hills",
-    "Property post code": 2125,
-    "Area": 900.1,
-    "Sold date": "18/4/2024",
-    "Purchase price": 3600000,
-    "Strata lot number": "",
-    "Street Address": "21 Timberline Ave  West Pennant Hills"
+    "property_id": 3480868,
+    "address": "21 Timberline Ave  West Pennant Hills",
+    "property_post_code": 2125,
+    "area": 900.1,
+    "sold_date": "18/4/2024",
+    "purchase_price": 3600000,
+    "strata_lot_number": "",
+    "street_address": "21 Timberline Ave  West Pennant Hills"
   },
   {
-    "Property ID": 4177283,
-    "Address": "38 Ernesta Pl  Bella Vista",
-    "Property post code": 2153,
-    "Area": 701.2,
-    "Sold date": "14/4/2024",
-    "Purchase price": 2433000,
-    "Strata lot number": "",
-    "Street Address": "38 Ernesta Pl  Bella Vista"
+    "property_id": 4177283,
+    "address": "38 Ernesta Pl  Bella Vista",
+    "property_post_code": 2153,
+    "area": 701.2,
+    "sold_date": "14/4/2024",
+    "purchase_price": 2433000,
+    "strata_lot_number": "",
+    "street_address": "38 Ernesta Pl  Bella Vista"
+  },
+  {
+    "property_id": 4230810,
+    "address": "10 Towell Way  Kellyville",
+    "property_post_code": 2155,
+    "area": 303.4,
+    "sold_date": "3/5/2024",
+    "purchase_price": 1900000,
+    "strata_lot_number": "",
+    "street_address": "10 Towell Way  Kellyville"
   }
-];
+]`;
 
-module.exports = properties;
+module.exports = propertiesString;

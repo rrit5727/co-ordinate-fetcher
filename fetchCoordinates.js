@@ -1,5 +1,7 @@
+const fs = require('fs');
 const fetch = require('node-fetch');
-const properties = require('./properties-copy'); // Importing properties from JSON file
+const propertiesData = require('./output'); // Importing properties 
+const util = require('util');
 
 const fetchCoordinates = async (address) => {
   const apiUrl = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(address)}&format=json`;
@@ -21,23 +23,12 @@ const fetchCoordinates = async (address) => {
   }
 };
 
-const formatProperty = (property) => {
-  const formattedProperty = {};
-  for (const [key, value] of Object.entries(property)) {
-    const formattedValue = typeof value === 'string' ? value : value;
-    // Remove quotes from keys
-    const formattedKey = key.replace(/"/g, '').replace(/ /g, '_').toLowerCase();
-    formattedProperty[formattedKey] = formattedValue;
-  }
-  return formattedProperty;
-};
-
 const main = async () => {
   const updatedProperties = [];
   let counter = 0;
 
-  for (const property of properties) {
-    const address = property['Street Address']; // Corrected key name
+  for (const property of propertiesData) {
+    const address = property['street_address']; // Corrected key name
     try {
       const coords = await fetchCoordinates(address);
       const updatedProperty = {
@@ -59,9 +50,19 @@ const main = async () => {
     console.log(`Processed ${counter} properties`);
   }
 
-  // Format output properties with keys without quotes and values without unnecessary quotes
-  const formattedProperties = updatedProperties.map(property => formatProperty(property));
-  console.log(formattedProperties);
+  // Write properties to a file as JavaScript object
+  
+  const outputString = `export const properties = ${util.inspect(updatedProperties, { depth: null, colors: false })};`;
+
+  // Write the string representation to a .js file
+  const outputFilePath = 'updatedProperties.js'; // Define output file path
+  fs.writeFile(outputFilePath, outputString, (err) => {
+    if (err) {
+        console.error('Error writing file:', err);
+    } else {
+        console.log(`Updated properties saved to ${outputFilePath}`);
+    }
+  });
 };
 
 main();

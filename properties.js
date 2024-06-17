@@ -18291,4 +18291,4 @@ const properties = [
   }
 ]
 
-module.exports = properties1;
+module.exports = properties;
