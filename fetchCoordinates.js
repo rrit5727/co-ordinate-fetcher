@@ -1,6 +1,6 @@
 const fs = require('fs');
 const fetch = require('node-fetch');
-const propertiesData = require('./output'); // Importing properties 
+const properties = require('./output'); // Importing properties 
 const util = require('util');
 
 const fetchCoordinates = async (address) => {
@@ -23,36 +23,56 @@ const fetchCoordinates = async (address) => {
   }
 };
 
+const chunkArray = (arr, chunkSize) => {
+  const chunks = [];
+  for (let i = 0; i < arr.length; i += chunkSize) {
+    chunks.push(arr.slice(i, i + chunkSize));
+  }
+  return chunks;
+};
+
 const main = async () => {
   const updatedProperties = [];
   let counter = 0;
 
-  for (const property of propertiesData) {
-    const address = property['street_address']; // Corrected key name
-    try {
-      const coords = await fetchCoordinates(address);
-      const updatedProperty = {
-        ...property,
-        coordinates: coords,
-      };
-      updatedProperties.push(updatedProperty);
-    } catch (error) {
-      console.log(`Failed to fetch coordinates for address: ${address}`);
-      const updatedProperty = {
-        ...property,
-        coordinates: null,
-      };
-      updatedProperties.push(updatedProperty);
-    }
+  // Split properties array into chunks
+  const chunks = chunkArray(properties[0], 100); // Adjust chunk size as needed
 
-    // Increment counter and print the current number
-    counter++;
-    console.log(`Processed ${counter} properties`);
+  for (const chunk of chunks) {
+    for (const property of chunk) {
+      const address = property['street_address']; // Corrected key name
+      try {
+        const coords = await fetchCoordinates(address);
+        const updatedProperty = {
+          ...property,
+          coordinates: coords,
+        };
+        updatedProperties.push(updatedProperty);
+      } catch (error) {
+        console.log(`Failed to fetch coordinates for address: ${address}`);
+        const updatedProperty = {
+          ...property,
+          coordinates: null,
+        };
+        updatedProperties.push(updatedProperty);
+      }
+
+      // Increment counter and print the current number
+      counter++;
+      console.log(`Processed ${counter} properties`);
+    }
   }
 
   // Write properties to a file as JavaScript object
-  
-  const outputString = `export const properties = ${util.inspect(updatedProperties, { depth: null, colors: false })};`;
+  let outputString = 'export const properties = [\n';
+  for (let i = 0; i < updatedProperties.length; i += 100) {
+    const chunk = updatedProperties.slice(i, i + 100);
+    outputString += util.inspect(chunk, { depth: null, colors: false });
+    if (i + 100 < updatedProperties.length) {
+      outputString += ',\n';
+    }
+  }
+  outputString += '];';
 
   // Write the string representation to a .js file
   const outputFilePath = 'updatedProperties.js'; // Define output file path

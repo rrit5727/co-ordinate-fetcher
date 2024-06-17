@@ -1,4 +1,4 @@
-const properties = [
+const propertiesString = `[
   {
     "property_id": 170121,
     "address": "35 Boikonumba Rd  Wyee",
@@ -18289,6 +18289,6 @@ const properties = [
     "strata_lot_number": "",
     "street_address": "40 Thomson St  Darlinghurst"
   }
-]
+]`;
 
-module.exports = properties;
+module.exports = propertiesString;
