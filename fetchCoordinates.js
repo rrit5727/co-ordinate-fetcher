@@ -1,7 +1,6 @@
 const fs = require('fs');
 const fetch = require('node-fetch');
 const properties = require('./output'); // Importing properties 
-const util = require('util');
 
 const fetchCoordinates = async (address) => {
   const apiUrl = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(address)}&format=json`;
@@ -31,14 +30,31 @@ const chunkArray = (arr, chunkSize) => {
   return chunks;
 };
 
+const writePropertiesChunkToFile = async (propertiesChunk, filePath) => {
+  return new Promise((resolve, reject) => {
+    const stream = fs.createWriteStream(filePath, { flags: 'a' }); // Append mode
+    propertiesChunk.forEach(property => {
+      const objectString = `{\n${Object.entries(property).map(([key, value]) => `  ${key}: ${JSON.stringify(value)},`).join('\n')}\n},\n`;
+      stream.write(objectString);
+    });
+    stream.end(() => {
+      resolve();
+    });
+    stream.on('error', err => {
+      reject(err);
+    });
+  });
+};
+
 const main = async () => {
-  const updatedProperties = [];
+  const chunkSize = 99; // Adjust chunk size as needed
   let counter = 0;
 
   // Split properties array into chunks
-  const chunks = chunkArray(properties[0], 100); // Adjust chunk size as needed
+  const chunks = chunkArray(properties[0], chunkSize);
 
   for (const chunk of chunks) {
+    const updatedProperties = [];
     for (const property of chunk) {
       const address = property['street_address']; // Corrected key name
       try {
@@ -61,28 +77,18 @@ const main = async () => {
       counter++;
       console.log(`Processed ${counter} properties`);
     }
-  }
 
-  // Write properties to a file as JavaScript object
-  let outputString = 'export const properties = [\n';
-  for (let i = 0; i < updatedProperties.length; i += 100) {
-    const chunk = updatedProperties.slice(i, i + 100);
-    outputString += util.inspect(chunk, { depth: null, colors: false });
-    if (i + 100 < updatedProperties.length) {
-      outputString += ',\n';
+    // Write properties chunk to file
+    const outputFile = `updatedProperties_${counter}.js`; // Updated output file path
+    try {
+      await writePropertiesChunkToFile(updatedProperties, outputFile);
+      console.log(`Updated properties saved to ${outputFile}`);
+    } catch (error) {
+      console.error('Error writing file:', error);
     }
   }
-  outputString += '];';
 
-  // Write the string representation to a .js file
-  const outputFilePath = 'updatedProperties.js'; // Define output file path
-  fs.writeFile(outputFilePath, outputString, (err) => {
-    if (err) {
-        console.error('Error writing file:', err);
-    } else {
-        console.log(`Updated properties saved to ${outputFilePath}`);
-    }
-  });
+  console.log('All properties files have been saved.');
 };
 
 main();

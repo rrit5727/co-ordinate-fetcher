@@ -2,7 +2,7 @@ const fs = require('fs');
 const util = require('util');
 
 // Import the properties string from another file
-const propertiesString = require('./properties');
+const propertiesString = require('./properties-copy');
 
 // Parse the properties string to convert it into a JavaScript array of objects
 const propertiesArray = JSON.parse(propertiesString);
