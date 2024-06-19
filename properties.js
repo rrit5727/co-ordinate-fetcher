@@ -930,16 +930,6 @@ const propertiesString = `[
     "street_address": "8 Howson Ave  Turramurra"
   },
   {
-    "property_id": 717020,
-    "address": "0.291666666666667 Wahroonga Ave  Wahroonga",
-    "property_post_code": 2076,
-    "area": 910.6,
-    "sold_date": "30/1/2024",
-    "purchase_price": 4400000,
-    "strata_lot_number": "",
-    "street_address": "0.291666666666667 Wahroonga Ave  Wahroonga"
-  },
-  {
     "property_id": 711841,
     "address": "12 Robina St  St Ives Chase",
     "property_post_code": 2075,
